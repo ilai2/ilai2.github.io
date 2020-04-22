@@ -1,6 +1,8 @@
 <!doctype html>
+<!doctype html>
 <body>
      <head>
+      <title>Decision Tree Generator</title>
       <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
      </head>
    <style>
@@ -38,17 +40,40 @@ spanblue {
   background: #bae1ff;
 }
 teensy {
+  color: #555555;
   font-size: 14px;
   font-style: italic;
   margin-left: 20px;
 }
+div {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%
+}
 </style>
-
+<div>
 <h1>Decision Tree Generator</h1><br>
 <h2>We <spanred>make decisions</spanred> in every aspect of our lives; understanding why we make the decisions we do is crucial to making better ones and improving our lives. This web app helps you generate <spanred>decision tree diagrams</spanred> to visualize a decision in your life. You’ll need to know:<ol>
 	<li>the <spanorange>choices available</spanorange> to you<br><teensy>I can eat ice cream or drink tea.</teensy></li>
 	<li>the <spanyellow>potential outcomes</spanyellow> of those choices <br><teensy>I'm lactose intolerant, so I might get an upset stomach if I eat ice cream. Nothing will happen if I drink tea.</teensy></li>
 	<li>the <spangreen>probability of those outcomes</spangreen> occurring <br>  <teensy>I think there's a 60% chance I have a negative reaction to the ice cream. There's a 100% chance I don't react negatively to tea.</teensy> </li>
 	<li>the <spanblue>value or utility</spanblue> you place on each outcome <br><teensy> I really like ice cream though; I would give ice cream with no negative reaction 100 points. Even with the negative reaction, it's still 60 points. Tea is my favorite beverage, but it's not as good as ice cream: 70 points.</teensy></li>
-</ol></h2></body>
+</ol>
+</h2>
+</div>
+  <div>
+  <form>
+  <label for="title">Briefly (less than 10 words) describe/title the situation you're in:</label><br>
+  <input type="text" id="title" name="title"><br>
+  <label for="numchoices">Last name:</label><br>
+  <input type="radio" id="2" name="numchoices" value="2">
+  <label for="male">Male</label><br>
+  <input type="radio" id="3" name="numchoices" value="3">
+  <label for="female">Female</label><br>
+  <input type="radio" id="4" name="numchoices" value="4">
+  <label for="other">Other</label><br>
+  <input type="submit">
+</form>
+</div>
+</body>
 
