@@ -1,5 +1,4 @@
 <!doctype html>
-<!doctype html>
 <body>
      <head>
       <title>Decision Tree Generator</title>
@@ -61,8 +60,9 @@ div {
 </ol>
 </h2>
 </div>
+<!--First round of forms!-->
   <div>
-  I currently face an important decision... I am <input type="text" id="nameInput" placeholder="choosing what to eat"></input>
+  I currently face an important decision... I am <input type="text" id="nameInput" placeholder="choosing what to eat"></input>.
   
   <br>
    I have <select id="numChoices" class = "dropdown">
@@ -71,8 +71,30 @@ div {
           <option value=4>4</option>
       </select> choices available to me.
   <br>
-  <button id="submitButton" class="block" type = "button" onclick="applyFilter()">Do your magic!</button>
+  <button id="submitButton" class="block" type = "button" onclick="applyFilter()">Let's start!</button>
+	</div>
+
+<!--Second round of forms!-->
+<div id="box2" class="boxed">
+	The choices I can make are <span id="choice-form"></span>.<br>
+	<button id="anotherButton" class="block" type="button" onclick="keepGoing()">Keep going!</button>
+</div>
+
+<!--Third round of forms!-->
+<div id="box3" class="boxed">
+	<span id="number-of-outcomes"></span>
+</div>
+
+<!--Fourth round of forms!-->
+<div id="box4" class="boxed">
+	<span id="names-of-each"></span>
+</div>
+
+<!--The image!-->
   <script>
+	  var numChoices
+	  var nameInput
+	  
   </script>
 </div>
 </body>
