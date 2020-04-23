@@ -1,146 +1,423 @@
 <!doctype html>
 <body>
-     <head>
-      <title>Decision Tree Generator</title>
-      <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/blocks.css/dist/blocks.min.css" />
-	</head>
-   <style>
-boxed {
-	border: 1px solid black;
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%
-	opacity: 0;
-}
-
-boxedVisible {
-	border: 1px solid black;
-	background-color: #f2f1ec;
-	margin-left: 2%;
-	margin-right: 2%;
-	padding-top: 1.5%;
-	padding-bottom: 1.5%;
-	opacity: 1;
-}
-body {
-  padding-top: 20px;
-  text-align: left;
-  font-family: 'Roboto Mono', monospace;
-  background-size: cover;
-}
-h1, h2 {
-  display: inline-block;
-  background: #fff;
-}
-h1 {
-  font-size: 40px;
-  font-weight: 700px;
-}
-h2 {
-  font-size: 18px;
-  font-weight: 400px;
-}
-spanred {
-  background: #ffb3ba;
-}
-spanorange {
-  background: #ffdfba;
-}
-spanyellow {
-  background: #ffffba;
-}
-spangreen {
-  background: #baffc9;
-}
-spanblue {
-  background: #bae1ff;
-}
-teensy {
-  color: #555555;
-  font-size: 14px;
-  font-style: italic;
-  margin-left: 20px;
-}
-div {
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%
-}
+<head>
+    <title>Decision Tree Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,300;1,400&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/blocks.css/dist/blocks.min.css"/>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<style>
 </style>
 <div>
-<h1>Decision Tree Generator</h1><br>
-	<h2>We <spanred>make decisions</spanred> in every aspect of our lives; understanding why we make the decisions we do is crucial to making better ones and improving our lives. This web app helps you generate <spanred>decision tree diagrams</spanred> to visualize a decision in your life. You’ll need to know:<ol>
-	<li>the <spanorange>choices available</spanorange> to you<br><teensy>I can eat ice cream or an apple.</teensy></li>
-	<li>the <spanyellow>potential outcomes</spanyellow> of those choices <br><teensy>I'm lactose intolerant, so I might get an upset stomach if I eat ice cream. Nothing will happen if I eat the apple.</teensy></li>
-	<li>the <spangreen>probability of those outcomes</spangreen> occurring <br>  <teensy>I think there's a 60% chance I have a negative reaction to the ice cream. There's a 100% chance I don't react negatively to the apple.</teensy> </li>
-	<li>the <spanblue>value or utility</spanblue> you place on each outcome <br><teensy> I really like ice cream though; I would give ice cream with no negative reaction 100 points. Even with the negative reaction, it's still 60 points. Apple is a pretty good fruit, but it's not as good as ice cream: 70 points.</teensy></li>
-</ol>
-</h2>
+    <h1>Decision Tree Generator</h1><br>
+    <h2>We
+        <spanred>make decisions</spanred>
+        in every aspect of our lives; understanding why we make the decisions we do is crucial to making better ones and
+        improving our lives. This web app helps you generate
+        <spanred>decision tree diagrams</spanred>
+        to visualize a decision in your life. You’ll need to know:
+        <ol>
+            <li>the
+                <spanorange>choices available</spanorange>
+                to you<br>
+                <teensy>I can eat ice cream or an apple.</teensy>
+            </li>
+            <li>the
+                <spanyellow>potential outcomes</spanyellow>
+                of those choices <br>
+                <teensy>I'm lactose intolerant, so I might get an upset stomach if I eat ice cream. Nothing will happen
+                    if I eat the apple.
+                </teensy>
+            </li>
+            <li>the
+                <spangreen>probability of those outcomes</spangreen>
+                occurring <br>
+                <teensy>I think there's a 60% chance I have a negative reaction to the ice cream. There's a 100% chance
+                    I don't react negatively to the apple.
+                </teensy>
+            </li>
+            <li>the
+                <spanblue>value or utility</spanblue>
+                you place on each outcome <br>
+                <teensy> I really like ice cream though; I would give ice cream with no negative reaction 100 points.
+                    Even with the negative reaction, it's still 60 points. Apple is a pretty good fruit, but it's not as
+                    good as ice cream: 70 points.
+                </teensy>
+            </li>
+        </ol>
+    </h2>
 </div>
 <!--First round of forms!-->
-  <div>
-  I currently face an important decision... I am <input type="text" id="nameInput" placeholder="choosing what to eat"></input>.
-  
-  <br>
-   I have <select id="numChoices" class = "dropdown">
-          <option value=2>2</option>
-          <option value=3>3</option>
-          <option value=4>4</option>
-      </select> choices available to me.
-  <br>
-  <button id="submitButton" class="block" type = "button" onclick="applyFilter()">Let's start!</button>
-	</div>
+<div>
+    I currently face an important decision... I am <input type="text" id="nameInput"
+                                                          placeholder="choosing what to eat"></input>.
+
+    <br>
+    I have <select id="numChoices" class="dropdown">
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+</select> choices available to me.
+    <br>
+    <button id="submitButton" class="block" type="button" onclick="applyFilter()">Let's start!</button>
+</div>
 
 <!--Second round of forms!-->
 <div id="box2" class="boxed">
-	The choices I can make are <span id="choice-form"></span>.<br>
-	<button id="anotherButton" class="block" type="button" onclick="keepGoing()">Keep going!</button>
+    The choices I can make are <span id="choice-form"></span>.<br>
+    <button id="anotherButton" class="block" type="button" onclick="keepGoing()">Keep going!</button>
 </div>
 
 <!--Third round of forms!-->
 <div id="box3" class="boxed">
-	<span id="number-of-outcomes"></span>
+    <span id="number-of-outcomes"></span>
+    <button id="yetAnotherButton" class="block" type="button" onclick="justKeepGoing()">And keep going!</button>
 </div>
 
 <!--Fourth round of forms!-->
 <div id="box4" class="boxed">
-	<span id="names-of-each"></span>
+    <span id="names-of-each"></span>
+    <button id="andYetAnotherButton" class="block" type="button" onclick="justKeepOnGoing()">And just keep going!
+    </button>
+</div>
+
+<!--Fifth round of forms!-->
+<div id="box5" class="boxed">
+    <span id="utilities"></span>
+    <button id="andHereIsYetAnotherButton" class="block" type="button" onclick="makeDiagram()">Make diagram!</button>
 </div>
 
 <!--The image!-->
-  <script>
-	  var numChoices
-	  var nameInput
-	  // make box visible
-	  applyFilter = function() {
-		    d3.select('#choice-form') 
-			  .html(function(d,i) {   
-				 return null
-			       })
-		  document.getElementById('box2').setAttribute("class", "boxedVisible");
-		  numChoices = document.getElementById('numChoices');
-  		  nameInput = document.getElementById('nameInput');
-		  if (nameInput.value == "") {
-			  nameInput = "choosing what to eat";
-		  }
-		    d3.select('#choice-form') 
-			  .html(function(d,i) {   
-				 var toReturn = "<input type='text' id='choice1' placeholder='ice cream'></input>," +
-				     " <input type='text' id='choice2' placeholder='apple'></input>"
-				 if (numChoices.value > 2) {
-					 toReturn = toReturn + ", <input type='text' id='choice3' placeholder='chicken'></input>"
-				 }
-			    	 if (numChoices.value > 3) {
-					 toReturn = toReturn + ", <input type='text' id='choice4' placeholder='banana'></input>."
-				 }
-			         return toReturn
-			       })
-	  }
-  	  
+<script>var numChoices
+var nameInput
+var choice1
+var choice2
+var choice3
+var choice4
+var numOutcomes1
+var numOutcomes2
+var numOutcomes3
+var numOutcomes4
+var outcome11
+var outcome12
+var outcome21
+var outcome22
+var outcome31
+var outcome32
+var outcome41
+var outcome42
+var probability11
+var probability12
+var probability21
+var probability22
+var probability31
+var probability32
+var probability41
+var probability42
+var score11
+var score12
+var score21
+var score22
+var score31
+var score32
+var score41
+var score42
 
-  // filter the data
 
-  </script>
+applyFilter = function() {
+    d3.select('#choice-form')
+        .html(function(d, i) {
+            return null
+        })
+    document.getElementById('box2').setAttribute("class", "boxedVisible");
+    numChoices = document.getElementById('numChoices');
+    nameInput = document.getElementById('nameInput');
+    if (nameInput.value == "" || nameInput.value == null) {
+        nameInput = "choosing what to eat";
+    }
+    d3.select('#choice-form')
+        .html(function(d, i) {
+            var toReturn =
+                "<input type='text' id='choice1' placeholder='ice cream'></input>," +
+                " <input type='text' id='choice2' placeholder='apple'></input>"
+            if (numChoices.value > 2) {
+                toReturn = toReturn +
+                    ", <input type='text' id='choice3' placeholder='chicken'></input>"
+            }
+            if (numChoices.value > 3) {
+                toReturn = toReturn +
+                    ", <input type='text' id='choice4' placeholder='banana'></input>"
+            }
+            return toReturn
+        })
+}
+
+keepGoing = function() {
+    d3.select('#number-of-outcomes')
+        .html(function(d, i) {
+            return null
+        })
+    document.getElementById('box3').setAttribute("class", "boxedVisible");
+    choice1 = document.getElementById('choice1').value;
+    choice2 = document.getElementById('choice2').value;
+    if (choice1 == "" || choice1 == null) {
+        choice1 = "ice cream";
+    }
+    if (choice2 == "" || choice2 == null) {
+        choice2 = "apple";
+    }
+    if (numChoices.value > 2) {
+        choice3 = document.getElementById('choice3').value;
+        if (choice3 == "" || choice3 == null) {
+            choice3 = "chicken";
+        }
+        choice3 = choice3.trim();
+    }
+    if (numChoices.value > 3) {
+        choice4 = document.getElementById('choice4').value;
+        if (choice4 == "" || choice4 == null) {
+            choice4 = "banana";
+        }
+        choice4 = choice4.trim();
+    }
+
+    choice1 = choice1.trim();
+    choice2 = choice2.trim();
+
+    d3.select('#number-of-outcomes')
+        .html(function(d, i) {
+            var toReturn = 'If I choose ' + choice1 +
+                ', <select id="numOutcomes1" class="dropdown">' +
+                '<option value=1>1</option>' +
+                '<option value=2>2</option>' +
+                '</select> outcome(s) are possible. <br>' +
+                'If I choose ' + choice2 +
+                ', <select id="numOutcomes2" class="dropdown">' +
+                '<option value=1>1</option>' +
+                '<option value=2>2</option>' +
+                '</select> outcome(s) are possible. <br>';
+
+            if (numChoices.value > 2) {
+                toReturn = toReturn + 'If I choose ' + choice3 +
+                    ', <select id="numOutcomes3" class="dropdown"> <option value=1>1</option><option value=2>2</option></select> outcome(s) are possible. <br>';
+            }
+
+            if (numChoices.value > 3) {
+                toReturn = toReturn + 'If I choose ' + choice4 +
+                    ', <select id="numOutcomes4" class="dropdown"> <option value=1>1</option><option value=2>2</option></select> outcome(s) are possible. <br>';
+            }
+            return toReturn
+        })
+}
+
+justKeepGoing = function() {
+    d3.select('#names-of-each')
+        .html(function(d, i) {
+            return null
+        })
+    document.getElementById('box4').setAttribute("class", "boxedVisible");
+    numOutcomes1 = document.getElementById('numOutcomes1');
+    numOutcomes2 = document.getElementById('numOutcomes2');
+    if (numChoices.value > 2) {
+        numOutcomes3 = document.getElementById('numOutcomes3');
+    }
+    if (numChoices.value > 3) {
+        numOutcomes4 = document.getElementById('numOutcomes4');
+    }
+    d3.select('#names-of-each')
+        .html(function(d, i) {
+            var toReturn = 'If I choose ' + choice1 +
+                ", <input type='text' id='outcome11' placeholder='something'></input> will happen with "
+            if (numOutcomes1.value == 1) {
+                toReturn = toReturn + "100% certainty.<br>"
+            } else {
+                toReturn = toReturn +
+                    "<input type=number id='probability11' placeholder=50 min=0 max=100></input>% certainty and <input type='text' id='outcome12' placeholder='nothing'></input> will happen with " +
+                    "<input type=number id='probability12' placeholder=50 min=0 max=100></input>% certainty.<br>"
+            }
+            toReturn = toReturn + "If I choose " + choice2 +
+                ", <input type='text' id='outcome21' placeholder='nothing'></input> will happen with "
+            if (numOutcomes2.value == 1) {
+                toReturn = toReturn + "100% certainty.<br>"
+            } else {
+                toReturn = toReturn +
+                    "<input type=number id='probability21' placeholder=50 min=0 max=100></input>% certainty and <input type='text' id='outcome22' placeholder='something'></input> will happen with " +
+                    "<input type=number id='probability22' placeholder=50 min=0 max=100></input>% certainty.<br>"
+            }
+
+            if (numChoices.value > 2) {
+                toReturn = toReturn + "If I choose " + choice3 +
+                    ", <input type='text' id='outcome31' placeholder='nothing'></input> will happen with "
+                if (numOutcomes3.value == 1) {
+                    toReturn = toReturn + "100% certainty.<br>"
+                } else {
+                    toReturn = toReturn +
+                        "<input type=number id='probability31' placeholder=50 min=0 max=100></input>% certainty and <input type='text' id='outcome32' placeholder='something'></input> will happen with " +
+                        "<input type=number id='probability32' placeholder=50 min=0 max=100></input>% certainty.<br>"
+                }
+            }
+
+            if (numChoices.value > 3) {
+                toReturn = toReturn + "If I choose " + choice4 +
+                    ", <input type='text' id='outcome41' placeholder='nothing'></input> will happen with "
+                if (numOutcomes4.value == 1) {
+                    toReturn = toReturn + "100% certainty.<br>"
+                } else {
+                    toReturn = toReturn +
+                        "<input type=number id='probability41' placeholder=50 min=0 max=100></input>% certainty and <input type='text' id='outcome42' placeholder='something'></input> will happen with " +
+                        "<input type=number id='probability42' placeholder=50 min=0 max=100></input>% certainty.<br>"
+                }
+            }
+            return toReturn
+        })
+}
+
+
+justKeepOnGoing = function() {
+    d3.select('#utilities')
+        .html(function(d, i) {
+            return null
+        })
+    document.getElementById('box5').setAttribute("class", "boxedVisible");
+    d3.select('#utilities')
+        .html(function(d, i) {
+            outcome11 = document.getElementById('outcome11').value;
+            outcome21 = document.getElementById('outcome21').value;
+            if (outcome11 == "" || outcome11 == null) {
+                outcome11 = "something";
+            }
+            if (outcome21 == "" || outcome21 == null) {
+                outcome21 = "nothing";
+            }
+            outcome11 = outcome11.trim();
+            outcome21 = outcome21.trim();
+
+            var toReturn = "If I choose " + choice1 + " and " +
+                outcome11 +
+                " happens, I would give it <input type=number id='score11' placeholder=60> points.<br>";
+            var toReturn2 = "If I choose " + choice2 + " and " +
+                outcome21 +
+                " happens, I would give it <input type=number id='score21' placeholder=70> points.<br>";
+            var toReturn3 = "";
+            var toReturn4 = "";
+            if (numChoices.value > 2) {
+                outcome31 = document.getElementById('outcome31').value;
+                if (outcome31 == "" || outcome3 == null) {
+                    outcome31 = "nothing";
+                }
+                outcome31 = outcome31.trim();
+                toReturn3 = "If I choose " + choice3 + " and " +
+                    outcome31 +
+                    " happens, I would give it <input type=number id='score31' placeholder=50> points.<br>";
+                if (numOutcomes3.value == 1) {
+                    probability31 = 100;
+                } else {
+                    outcome32 = document.getElementById('outcome32').value;
+                    if (outcome32 == "" || outcome32 == null) {
+                        outcome32 = "something";
+                    }
+                    outcome32 = outcome32.trim();
+                    probability31 = document.getElementById('probability31')
+                        .value;
+                    if (probability31 == null) {
+                        probability31 = 50;
+                    }
+                    probability32 = document.getElementById('probability32')
+                        .value;
+                    if (probability32 == null) {
+                        probability32 = 50;
+                    }
+                    toReturn3 = toReturn3 + "If I choose " + choice3 +
+                        " and " + outcome32 +
+                        " happens, I would give it <input type=number id='score32' placeholder=50> points.<br>"
+                }
+            }
+
+            if (numChoices.value > 3) {
+                outcome41 = document.getElementById('outcome41').value;
+                if (outcome41 == "" || outcome41 == null) {
+                    outcome41 = "nothing";
+                }
+                outcome41 = outcome41.trim();
+                toReturn4 = "If I choose " + choice4 + " and " +
+                    outcome41 +
+                    " happens, I would give it <input type=number id='score41' placeholder=50> points.<br>";
+                if (numOutcomes4.value == 1) {
+                    probability41 = 100;
+                } else {
+                    outcome42 = document.getElementById('outcome42').value;
+                    if (outcome42 == "" || outcome42 == null) {
+                        outcome42 = "nothing";
+                    }
+                    outcome42 = outcome42.trim();
+                    probability41 = document.getElementById('probability41')
+                        .value;
+                    if (probability41 == null) {
+                        probability41 = 50;
+                    }
+                    probability42 = document.getElementById('probability42')
+                        .value;
+                    if (probability42 == null) {
+                        probability42 = 50;
+                    }
+                    toReturn4 = toReturn4 + "If I choose " + choice4 +
+                        " and " + outcome42 +
+                        " happens, I would give it <input type=number id='score42' placeholder=50> points.<br>"
+                }
+            }
+
+            if (numOutcomes1.value == 1) {
+                probability11 = 100;
+            } else {
+                outcome12 = document.getElementById('outcome12').value;
+                if (outcome12 == "" || outcome12 == null) {
+                    outcome12 = "nothing";
+                }
+                outcome12 = outcome12.trim();
+                probability11 = document.getElementById('probability11')
+                    .value;
+                if (probability11 == null) {
+                    probability11 = 50
+                }
+                probability12 = document.getElementById('probability12')
+                    .value;
+                if (probability12 == null) {
+                    probability12 = 50
+                }
+                toReturn = toReturn + "If I choose " + choice1 +
+                    " and " + outcome12 +
+                    " happens, I would give it <input type=number id='score12' placeholder=100> points.<br>"
+            }
+
+            if (numOutcomes2.value == 1) {
+                probability21 = 100;
+            } else {
+                outcome22 = document.getElementById('outcome22').value;
+                if (outcome22 == "" || outcome22 == null) {
+                    outcome22 = "something";
+                }
+                outcome22 = outcome22.trim();
+                probability21 = document.getElementById('probability21')
+                    .value;
+                if (probability21 == null) {
+                    probability21 = 50;
+                }
+                probability22 = document.getElementById('probability22')
+                    .value;
+                if (probability22 == null) {
+                    probability22 = 50;
+                }
+                toReturn2 = toReturn2 + "If I choose " + choice2 +
+                    " and " + outcome22 +
+                    " happens, I would give it <input type=number id='score22' placeholder=50> points.<br>";
+            }
+
+            return toReturn + toReturn2 + toReturn3 + toReturn4
+        })
+}
+
+
+</script>
 </body>
-
