@@ -453,8 +453,8 @@ EU21 = (probability21 / 100) * score21
 
 var data = [
     { "name" : nameInput.value, "parent":null },
-    { "name" : choice1, "parent":nameInput },
-    { "name" : choice2, "parent":nameInput },
+    { "name" : choice1, "parent":nameInput.value },
+    { "name" : choice2, "parent":nameInput.value },
     { "name" : outcome11 + ", with " + probability11 + "% certainty (" + score11 + "), EXPECTED UTILITY: " + EU11, "parent":choice1 },
     { "name" : outcome21 + ", with " + probability21 + "% certainty (" + score21 + "), EXPECTED UTILITY: " + EU21, "parent":choice2}
     ];
@@ -465,7 +465,7 @@ var data = [
             score31 = 50;
         }
         EU31 = (probability31 / 100) * score31
-        data.push({ "name" : choice3, "parent":nameInput })
+        data.push({ "name" : choice3, "parent":nameInput.value })
         data.push({ "name" : outcome31+ ", with " + probability31 + "% certainty (" + score31 + "), EXPECTED UTILITY: " + EU31, "parent":choice3 })
         if (numOutcomes3.value == 2) {
             score32 = document.getElementById('score32').value;
@@ -483,7 +483,7 @@ var data = [
             score41 = 50;
         }
         EU41 = (probability41 / 100) * score41
-        data.push({ "name" : choice4, "parent":nameInput })
+        data.push({ "name" : choice4, "parent":nameInput.value })
         data.push({ "name" : outcome41+ ", with " + probability41 + "% certainty (" + score41 + "), EXPECTED UTILITY: " + EU41, "parent":choice4 })
         if (numOutcomes4.value == 2) {
             score42 = document.getElementById('score42').value;
