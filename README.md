@@ -22,4 +22,4 @@ Problems with the project include:
 1. The diagram doesn't refresh when you press the Make Diagram! button (everything else does refresh when you press the other buttons, and the decision you should make refreshes, jut not the diagram).
 2. The code is the most messy, non-extensible thing I've ever written.
 3. The diagram is a fixed size, so it doesn't scale well.
-4. All the nodes are circles; the root should be a square, but it's not
+4. All the nodes are circles; the root should be a square, but it's not.
