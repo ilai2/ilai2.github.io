@@ -1,0 +1,66 @@
+.boxed {
+  opacity: 0;
+  padding-top: 20px;
+}
+
+.boxedVisible {
+  opacity: 1;
+  padding-top: 20px;
+}
+ .node circle {
+   fill: #fff;
+   stroke: steelblue;
+   stroke-width: 3px;
+ }
+
+ .node text { font: 12px sans-serif; }
+
+ .link {
+   fill: none;
+   stroke: #ccc;
+   stroke-width: 2px;
+ }
+body {
+  padding-top: 20px;
+  text-align: left;
+  font-family: 'Roboto Mono', monospace;
+  background-size: cover;
+}
+h1, h2 {
+  display: inline-block;
+  background: #fff;
+}
+h1 {
+  font-size: 40px;
+  font-weight: 700px;
+}
+h2 {
+  font-size: 18px;
+  font-weight: 400px;
+}
+spanred {
+  background: #ffb3ba;
+}
+spanorange {
+  background: #ffdfba;
+}
+spanyellow {
+  background: #ffffba;
+}
+spangreen {
+  background: #baffc9;
+}
+spanblue {
+  background: #bae1ff;
+}
+teensy {
+  color: #555555;
+  font-size: 14px;
+  font-style: italic;
+  margin-left: 20px;
+}
+div {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%
+}
