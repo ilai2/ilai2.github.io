@@ -452,7 +452,7 @@ EU11 = (probability11 / 100) * score11
 EU21 = (probability21 / 100) * score21
 
 var data = [
-    { "name" : nameInput, "parent":null },
+    { "name" : nameInput.value, "parent":null },
     { "name" : choice1, "parent":nameInput },
     { "name" : choice2, "parent":nameInput },
     { "name" : outcome11 + ", with " + probability11 + "% certainty (" + score11 + "), EXPECTED UTILITY: " + EU11, "parent":choice1 },
@@ -634,6 +634,12 @@ function update(source) {
 
 }
 }
+
+
+
+
+
+
 
 </script>
 </body>
