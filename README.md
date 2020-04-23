@@ -1,2 +1,6 @@
 # Isabel's JDM Emporium
-* [Make a decision tree](https://ilai2.github.io/decision-tree.html) (Final project)
+Hello to the making decisions enthusiast viewing! Welcome to Isabel's JDM Emporium, where there's currently only one thing to do: generate decision tree diagrams!
+
+This generator was made for 
+
+Isabel is a student at Brown University and made this web app
