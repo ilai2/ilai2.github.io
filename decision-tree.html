@@ -114,18 +114,33 @@ div {
 	  var nameInput
 	  // make box visible
 	  applyFilter = function() {
+		    d3.select('#choice-form') 
+			  .html(function(d,i) {   
+				 return null
+			       })
 		  document.getElementById('box2').setAttribute("class", "boxedVisible");
 		  numChoices = document.getElementById('numChoices');
   		  nameInput = document.getElementById('nameInput');
 		  if (nameInput.value == "") {
 			  nameInput = "choosing what to eat";
 		  }
+		    d3.select('#choice-form') 
+			  .html(function(d,i) {   
+				 var toReturn = "<input type='text' id='choice1' placeholder='ice cream'></input>," +
+				     " <input type='text' id='choice2' placeholder='apple'></input>"
+				 if (numChoices.value > 2) {
+					 toReturn = toReturn + ", <input type='text' id='choice3' placeholder='chicken'></input>"
+				 }
+			    	 if (numChoices.value > 3) {
+					 toReturn = toReturn + ", <input type='text' id='choice4' placeholder='banana'></input>."
+				 }
+			         return toReturn
+			       })
 	  }
   	  
 
   // filter the data
 
   </script>
-</div>
 </body>
 
