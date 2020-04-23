@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/blocks.css/dist/blocks.min.css"/>
     <link rel="stylesheet" href="style.css"/>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 </head>
 <style>
 </style>
@@ -89,6 +90,10 @@
     <button id="andHereIsYetAnotherButton" class="block" type="button" onclick="makeDiagram()">Make diagram!</button>
 </div>
 
+<div id="box6" class="boxed">
+    <span id="image"></span>
+</div>
+
 <!--The image!-->
 <script>var numChoices
 var nameInput
@@ -124,7 +129,18 @@ var score31
 var score32
 var score41
 var score42
-
+var EU11
+var EU12
+var EU21
+var EU22
+var EU31
+var EU32
+var EU41
+var EU42
+var generated = false;
+var svg
+var maxEU
+var maxChoice
 
 applyFilter = function() {
     d3.select('#choice-form')
@@ -321,12 +337,12 @@ justKeepOnGoing = function() {
                     outcome32 = outcome32.trim();
                     probability31 = document.getElementById('probability31')
                         .value;
-                    if (probability31 == null) {
+                    if (probability31.length == 0) {
                         probability31 = 50;
                     }
                     probability32 = document.getElementById('probability32')
                         .value;
-                    if (probability32 == null) {
+                    if (probability32.length == 0) {
                         probability32 = 50;
                     }
                     toReturn3 = toReturn3 + "If I choose " + choice3 +
@@ -354,12 +370,12 @@ justKeepOnGoing = function() {
                     outcome42 = outcome42.trim();
                     probability41 = document.getElementById('probability41')
                         .value;
-                    if (probability41 == null) {
+                    if (probability41.length == 0) {
                         probability41 = 50;
                     }
                     probability42 = document.getElementById('probability42')
                         .value;
-                    if (probability42 == null) {
+                    if (probability42.length == 0) {
                         probability42 = 50;
                     }
                     toReturn4 = toReturn4 + "If I choose " + choice4 +
@@ -378,12 +394,12 @@ justKeepOnGoing = function() {
                 outcome12 = outcome12.trim();
                 probability11 = document.getElementById('probability11')
                     .value;
-                if (probability11 == null) {
+                if (probability11.length == 0) {
                     probability11 = 50
                 }
                 probability12 = document.getElementById('probability12')
                     .value;
-                if (probability12 == null) {
+                if (probability12.length == 0) {
                     probability12 = 50
                 }
                 toReturn = toReturn + "If I choose " + choice1 +
@@ -401,12 +417,12 @@ justKeepOnGoing = function() {
                 outcome22 = outcome22.trim();
                 probability21 = document.getElementById('probability21')
                     .value;
-                if (probability21 == null) {
+                if (probability21.length == 0) {
                     probability21 = 50;
                 }
                 probability22 = document.getElementById('probability22')
                     .value;
-                if (probability22 == null) {
+                if (probability22.length == 0) {
                     probability22 = 50;
                 }
                 toReturn2 = toReturn2 + "If I choose " + choice2 +
@@ -418,6 +434,225 @@ justKeepOnGoing = function() {
         })
 }
 
+makeDiagram = function() {
+    d3.select('#image')
+        .html(function(d, i) {
+            return null
+        })
+    document.getElementById('box6').setAttribute("class", "boxedVisible");
+    d3.select('#image')
+        .html(function(d, i) {
+            maxEU = EU11 + function() { if (numOutcomes1.value == 2) { return EU12 } else { return 0 }}
+            var totalEU2 = EU21 + function() { if (numOutcomes2.value == 2) { return EU22 } else { return 0 }}
+            // maxEU = function() {
+
+            return ""
+        })
+score11 = document.getElementById('score11').value;
+if (score11.length == 0) {
+    score11 = 60
+}
+score21 = document.getElementById('score21').value;
+if (score21.length == 0) {
+    score21 = 70
+}
+EU11 = (probability11 / 100) * score11
+EU21 = (probability21 / 100) * score21
+
+var data = [
+    { "name" : nameInput, "parent":null },
+    { "name" : choice1, "parent":nameInput },
+    { "name" : choice2, "parent":nameInput },
+    { "name" : outcome11 + ", with " + probability11 + "% certainty (" + score11 + "), EXPECTED UTILITY: " + EU11, "parent":choice1 },
+    { "name" : outcome21 + ", with " + probability21 + "% certainty (" + score21 + "), EXPECTED UTILITY: " + EU21, "parent":choice2}
+    ];
+
+    if (numChoices.value > 2) {
+        score31 = document.getElementById('score31').value;
+        if (score31.length == 0) {
+            score31 = 50;
+        }
+        EU31 = (probability31 / 100) * score31
+        data.push({ "name" : choice3, "parent":nameInput })
+        data.push({ "name" : outcome31+ ", with " + probability31 + "% certainty (" + score31 + "), EXPECTED UTILITY: " + EU31, "parent":choice3 })
+        if (numOutcomes3.value == 2) {
+            score32 = document.getElementById('score32').value;
+            if (score32.length == 0) {
+                score32 = 50;
+            }
+            EU32 = (probability32 / 100) * score32
+            data.push({ "name" : outcome32 + ", with " + probability32 + "% certainty (" + score32 + "), EXPECTED UTILITY: " + EU32, "parent":choice3 })
+        }
+    }
+
+    if (numChoices.value > 3) {
+        score41 = document.getElementById('score41').value;
+        if (score41.length == 0) {
+            score41 = 50;
+        }
+        EU41 = (probability41 / 100) * score41
+        data.push({ "name" : choice4, "parent":nameInput })
+        data.push({ "name" : outcome41+ ", with " + probability41 + "% certainty (" + score41 + "), EXPECTED UTILITY: " + EU41, "parent":choice4 })
+        if (numOutcomes4.value == 2) {
+            score42 = document.getElementById('score42').value;
+            if (score42.length == 0) {
+                score42 = 50;
+            }
+            EU42 = (probability42 / 100) * score42
+            data.push({ "name" : outcome42 + ", with " + probability42 + "% certainty (" + score42 + "), EXPECTED UTILITY: " + EU42, "parent":choice4 })
+        }
+    }
+
+    if (numOutcomes1.value == 2) {
+            score12 = document.getElementById('score12').value;
+            if (score12.length == 0) {
+                score12 = 50;
+            }
+            EU12 = (probability12 / 100) * score12
+            data.push({ "name" : outcome12 + ", with " + probability12 + "% certainty (" + score12 + "), EXPECTED UTILITY: " + EU12, "parent":choice1 })
+    }
+    
+    if (numOutcomes2.value == 2) {
+            score22 = document.getElementById('score22').value;
+            if (score22.length == 0) {
+                score22 = 50;
+            }
+            EU22 = (probability22 / 100) * score22
+            data.push({ "name" : outcome22 + ", with " + probability22 + "% certainty (" + score22 + "), EXPECTED UTILITY: " + EU22, "parent":choice2 })
+    }
+
+// *********** Convert flat data into a nice tree ***************
+// create a name: node map
+var dataMap = data.reduce(function(map, node) {
+	map[node.name] = node;
+	return map;
+}, {});
+
+// create the tree array
+var treeData = [];
+data.forEach(function(node) {
+	// add to parent
+	var parent = dataMap[node.parent];
+	if (parent) {
+		// create child array if it doesn't exist
+		(parent.children || (parent.children = []))
+			// add node to child array
+			.push(node);
+	} else {
+		// parent is null or missing
+		treeData.push(node);
+	}
+});
+if (!generated) {
+// ************** Generate the tree diagram	 *****************
+var margin = {top: 20, right: 100, bottom: 20, left: 300},
+	width = 960,
+	height = 500;
+var i = 0;
+
+var tree = d3.layout.tree()
+	.size([height, width]);
+
+var diagonal = d3.svg.diagonal()
+	.projection(function(d) { return [d.y, d.x]; });
+ svg = d3.select("body").append("svg")
+	.attr("width", width + margin.right + margin.left)
+	.attr("height", height + margin.top + margin.bottom)
+  .append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+root = treeData[0];
+generated = true;
+}
+update(root);
+
+function update(source) {
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse(),
+	  links = tree.links(nodes);
+
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+  // Declare the nodes…
+  var node = svg.selectAll("g.node")
+	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  // Enter the nodes.
+  var nodeEnter = node.enter().append("g")
+	  .attr("class", "node")
+	  .attr("transform", function(d) {
+		  return "translate(" + d.y + "," + d.x + ")"; });
+
+  nodeEnter.append("circle")
+	  .attr("r", 10)
+	  .style("fill", "#fff");
+
+  nodeEnter.append("text")
+	  .attr("x", function(d) {
+		  return d.children || d._children ? -13 : 13; })
+	  .attr("dy", ".35em")
+	  .attr("text-anchor", function(d) {
+		  return d.children || d._children ? "end" : "start"; })
+	  .text(function(d) { return d.name; })
+	  .style("fill-opacity", 1);
+
+  // Declare the links…
+  var link = svg.selectAll("path.link")
+	  .data(links, function(d) { return d.target.id; });
+
+  // Enter the links.
+  link.enter().insert("path", "g")
+	  .attr("class", "link")
+	  .attr("d", diagonal);
+
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 </body>
+
