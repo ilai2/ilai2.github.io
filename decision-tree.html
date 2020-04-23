@@ -113,11 +113,18 @@ div {
 	  var numChoices
 	  var nameInput
 	  // make box visible
-  	  document.getElementById('box2').setAttribute("class", "boxedVisible");
+	  applyFilter = function() {
+		  document.getElementById('box2').setAttribute("class", "boxedVisible");
+		  numChoices = document.getElementById('numChoices');
+  		  nameInput = document.getElementById('nameInput');
+		  if (nameInput.value == "") {
+			  nameInput = "choosing what to eat";
+		  }
+	  }
+  	  
 
   // filter the data
-  numChoices = document.getElementById('numChoices');
-  nameInput = document.getElementById('nameInput');
+
   </script>
 </div>
 </body>
