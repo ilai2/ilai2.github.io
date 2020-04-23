@@ -439,15 +439,7 @@ makeDiagram = function() {
         .html(function(d, i) {
             return null
         })
-    document.getElementById('box6').setAttribute("class", "boxedVisible");
-    d3.select('#image')
-        .html(function(d, i) {
-            maxEU = EU11 + function() { if (numOutcomes1.value == 2) { return EU12 } else { return 0 }}
-            var totalEU2 = EU21 + function() { if (numOutcomes2.value == 2) { return EU22 } else { return 0 }}
-            // maxEU = function() {
 
-            return ""
-        })
 score11 = document.getElementById('score11').value;
 if (score11.length == 0) {
     score11 = 60
@@ -520,6 +512,40 @@ var data = [
             EU22 = (probability22 / 100) * score22
             data.push({ "name" : outcome22 + ", with " + probability22 + "% certainty (" + score22 + "), EXPECTED UTILITY: " + EU22, "parent":choice2 })
     }
+
+
+    document.getElementById('box6').setAttribute("class", "boxedVisible");
+    d3.select('#image')
+        .html(function(d, i) {
+            maxEU = EU11
+            if (numOutcomes1.value == 2) { maxEU = EU12 + EU11 }
+            maxChoice = choice1
+            var totalEU2 = EU21
+            if (numOutcomes2.value == 2) { totalEU2 = EU22 + EU21 } 
+            if (totalEU2 > maxEU) {
+                maxEU = totalEU2
+                maxChoice = choice2
+            }
+
+            if (numChoices.value > 2) {
+                var totalEU3 = EU31
+                if (numOutcomes3.value == 2) { totalEU3 = EU32 + EU31 } 
+                if (totalEU3 > maxEU) {
+                    maxEU = totalEU3
+                    maxChoice = choice3
+                }
+            }
+            if (numChoices.value > 3) {
+                var totalEU4 = EU41
+                if (numOutcomes4.value == 2) { totalEU4 = EU42 + EU41 } 
+                if (totalEU4 > maxEU) {
+                    maxEU = totalEU4
+                    maxChoice = choice4
+                }
+            }
+
+            return "According to Expected Utility Theory, you should choose " + maxChoice + ", as it will bring you total expected utility of " + maxEU + ".<br>";
+        })
 
 // *********** Convert flat data into a nice tree ***************
 // create a name: node map
@@ -608,50 +634,6 @@ function update(source) {
 
 }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>
 </body>
